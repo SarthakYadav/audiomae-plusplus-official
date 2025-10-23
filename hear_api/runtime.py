@@ -27,7 +27,7 @@ class RuntimeMAE(nn.Module):
         ckpts = glob.glob(os.path.join(weights_dir, "checkpoints", "*.pth"))
         ckpts = sorted(ckpts, key=lambda x:int(x.replace(".pth","").split("-")[-1]))
         print("loading checkpoint -> {}".format(ckpts[-1]))
-        checkpoint = torch.load(ckpts[-1], map_location="cpu")
+        checkpoint = torch.load(ckpts[-1], map_location="cpu", weights_only=False)
         model.load_state_dict(checkpoint['model'])
 
         self.model = model
@@ -49,9 +49,13 @@ class RuntimeMAE(nn.Module):
         self.embed_dim = self.model.embed_dim
         self.frequency_first = self.model.frequency_first
         self.log_mel_spec = LogMelSpec(flip_ft=not self.frequency_first)
-        self._cpu_mel_spec = "AMD" in torch.cuda.get_device_name()
-        if self._cpu_mel_spec:
-           print("Running on an AMD device, extracting features on the CPU")
+        try:
+            self._cpu_mel_spec = "AMD" in torch.cuda.get_device_name()
+            if self._cpu_mel_spec:
+                print("Running on an AMD device, extracting features on the CPU")
+        except AssertionError as ex:
+            print("Assertion error occured when getting device name:", ex)
+            self._cpu_mel_spec = False
 
     def to_feature(self, batch_audio):
         if self._cpu_mel_spec:
