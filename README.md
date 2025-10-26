@@ -1,5 +1,5 @@
 # audiomae-plusplus-official
-This is the official repository for our paper ["AudioMAE++: learning better masked audio representations with SwiGLU FFNs"](https://arxiv.org/abs/2507.10464), to appear in proceedings of IEEE Workshop on Machine Learning for Signal Processing (MLSP) 2025. 
+This is the official repository for our paper ["AudioMAE++: learning better masked audio representations with SwiGLU FFNs"](https://ieeexplore.ieee.org/document/11204339), from the IEEE Workshop on Machine Learning for Signal Processing (MLSP) 2025. 
 
 # Contents
 * [Pre-trained weights for the default AudioMAE++ configurations](https://drive.google.com/drive/folders/15buH9kS6KUEJGW3EN5lN_WOOGMTA-ma7?usp=sharing)
